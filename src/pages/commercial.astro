@@ -1,17 +1,109 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getCollection, render } from 'astro:content';
-
-const services = await getCollection('services');
-const entry = services.find((s) => s.data.slug === 'commercial' && s.data.locale === 'en')!;
-const { Content } = await render(entry);
 ---
-<Base title={`${entry.data.title} | Ling Jordan`} description={entry.data.description} path="/commercial">
-  <header style="padding:1.25rem var(--gutter);border-bottom:1px solid var(--mist)">
-    <a href="/" style="text-decoration:none;color:var(--jade)">&larr; Ling Jordan</a>
-  </header>
-  <article style="padding:clamp(2rem,6vw,4rem) var(--gutter);max-width:48rem">
-    <h1 style="margin:0 0 2rem">{entry.data.title}</h1>
-    <Content />
-  </article>
+<Base
+  title="Commercial Real Estate in Collin County | Ling Jordan, TACS"
+  description="Texas Accredited Commercial Specialist serving investors, business owners, and landlords in Frisco, Plano, McKinney, Prosper, and Allen. Retail, office, flex, industrial, multifamily, and land."
+  path="/commercial"
+>
+  <section class="wrap section narrow">
+    <p class="eyebrow">Commercial</p>
+    <h1>Commercial real estate, with the credential to back it.</h1>
+    <p class="lede">
+      I hold the Texas Accredited Commercial Specialist designation. Most agents
+      who take a commercial listing do not, and the difference shows up in how
+      the deal is underwritten rather than how it is marketed.
+    </p>
+  </section>
+
+  <section class="band">
+    <div class="wrap section">
+      <div class="grid grid-2">
+        <div>
+          <h2 style="margin-top:0">What TACS means for you</h2>
+          <p>
+            The designation requires coursework in commercial contracts, leasing,
+            valuation, and investment analysis, and it is administered through
+            Texas REALTORS&reg;. In practice it means I read a rent roll, an
+            operating statement, and a lease abstract as a matter of routine.
+          </p>
+          <p>
+            Commercial transactions turn on terms buried in the lease and the
+            expense structure &mdash; not on photographs. That is where the work is.
+          </p>
+        </div>
+        <div>
+          <h2 style="margin-top:0">Asset types</h2>
+          <ul class="clean">
+            <li>Retail and neighborhood strip centers</li>
+            <li>Office and flex space</li>
+            <li>Small industrial and warehouse</li>
+            <li>Multifamily</li>
+            <li>Land and development sites</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 style="margin-top:0">Services</h2>
+    <div class="grid grid-2" style="margin-top:1.5rem">
+      <article class="card">
+        <h3>Tenant representation</h3>
+        <p style="margin:0">
+          Site selection, market rent comparison, and lease negotiation for
+          business owners. The landlord's form lease is a starting position,
+          not a fixed document.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Landlord representation</h3>
+        <p style="margin:0">
+          Marketing vacant space, qualifying prospective tenants, and structuring
+          terms that hold their value over the life of the lease.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Acquisition</h3>
+        <p style="margin:0">
+          Sourcing, underwriting, and due diligence coordination for investors
+          buying income property in Collin County.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Disposition</h3>
+        <p style="margin:0">
+          Positioning and marketing an asset to the buyer pool most likely to
+          pay for it, with financials organized before it goes to market.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap section">
+      <h2 style="margin-top:0">Commercial property management</h2>
+      <p class="prose">
+        I also manage commercial property, which means the same person who
+        understands the lease is the one enforcing it. Details and fees are on
+        the owner services page.
+      </p>
+      <p><a class="btn btn-secondary" href="/owners">Owner services &rarr;</a></p>
+    </div>
+  </section>
+
+  <section class="band-jade">
+    <div class="wrap section">
+      <h2 style="margin-top:0">Request a market analysis</h2>
+      <p style="max-width:var(--measure)">
+        Tell me the asset and the goal &mdash; acquisition, disposition, or a
+        lease decision &mdash; and I will put together the numbers.
+      </p>
+      <div class="btn-row" style="margin-top:1.75rem">
+        <a class="btn btn-primary" href="/contact">Start a conversation</a>
+        <a class="btn btn-ghost" href="tel:+19728157644">Call 972-815-7644</a>
+      </div>
+    </div>
+  </section>
 </Base>

@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import Seal from '../components/Seal.astro';
 import { getCollection } from 'astro:content';
 
 const guides = (await getCollection('neighborhoods'))
@@ -8,81 +8,129 @@ const guides = (await getCollection('neighborhoods'))
   .sort((a, b) => a.data.city.localeCompare(b.data.city));
 ---
 <Base
-  title="Ling Jordan | Homes, Commercial, and Property Management in Collin County"
-  description="Licensed Texas agent serving Plano, Frisco, McKinney, Prosper, and Allen. Residential sales, commercial real estate, and property management. Service in English and Mandarin."
+  title="Ling Jordan | Real Estate in Plano, Frisco, McKinney, Prosper &amp; Allen"
+  description="Licensed Texas agent with Golden Realty in Frisco. Residential sales, commercial real estate, and property management across Collin County. Service in English and Mandarin."
   path="/"
 >
-  <header style="display:flex;justify-content:space-between;align-items:center;padding:1.25rem var(--gutter);border-bottom:1px solid var(--mist)">
-    <a href="/" style="font-family:var(--font-display);font-size:var(--step-1);text-decoration:none;color:var(--jade)">Ling Jordan</a>
-    <LanguageSwitcher path="/" />
-  </header>
-
-  <section style="padding:clamp(3rem,10vw,7rem) var(--gutter);max-width:60rem">
-    <h1 style="margin:0 0 1.5rem">Homes, commercial, and property management across Collin County.</h1>
-    <p style="max-width:var(--measure);font-size:var(--step-1);margin:0 0 2.5rem;color:var(--jade-deep)">
-      Licensed Texas agent based in Frisco. Serving Plano, Frisco, McKinney, Prosper, and Allen.
-      Service in English and Mandarin.
-    </p>
-    <div style="display:flex;gap:1rem;flex-wrap:wrap">
-      <a class="btn btn-primary" href="/homes">Buy or sell a home</a>
-      <a class="btn btn-secondary" href="/owners">I own property</a>
+  <section class="wrap" style="padding-block:clamp(3rem,9vw,6.5rem)">
+    <div style="display:flex;align-items:flex-start;gap:2rem;flex-wrap:wrap">
+      <div style="flex:1 1 30rem">
+        <p class="eyebrow">Collin County, Texas</p>
+        <h1>Three ways I can help you with property.</h1>
+        <p class="lede">
+          I sell homes, broker commercial deals, and manage property for owners
+          across Plano, Frisco, McKinney, Prosper, and Allen. Same licensed agent
+          on all three &mdash; you will not get handed off.
+        </p>
+        <div class="btn-row" style="margin-top:2rem">
+          <a class="btn btn-primary" href="/homes">Search homes</a>
+          <a class="btn btn-secondary" href="/owners">I own property</a>
+        </div>
+      </div>
+      <div style="flex:0 0 auto;margin-inline:auto">
+        <Seal size={150} />
+      </div>
     </div>
   </section>
 
-  <section style="padding:0 var(--gutter) clamp(3rem,8vw,5rem)">
-    <div style="display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
-      <article style="border-top:2px solid var(--jade);padding-top:1.25rem">
-        <h2 style="font-size:var(--step-1);margin:0 0 .5rem">Residential</h2>
-        <p style="margin:0 0 1rem">Buying and selling homes, including new construction and builder contracts.</p>
+  <section class="band">
+    <div class="wrap tight stat-row">
+      <div><p class="stat-n">50</p><p class="stat-l">Doors under management</p></div>
+      <div><p class="stat-n">TACS</p><p class="stat-l">Accredited commercial specialist</p></div>
+      <div><p class="stat-n">5</p><p class="stat-l">Collin County cities served</p></div>
+      <div><p class="stat-n">2</p><p class="stat-l">Languages spoken in-house</p></div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="grid grid-3 reveal">
+      <article class="door">
+        <h3>Residential</h3>
+        <p>
+          Buying and selling homes, including builder contracts on new
+          construction &mdash; where the standard paperwork is written by the
+          builder, for the builder.
+        </p>
         <a href="/homes">Search homes &rarr;</a>
       </article>
-      <article style="border-top:2px solid var(--brass);padding-top:1.25rem">
-        <h2 style="font-size:var(--step-1);margin:0 0 .5rem">Commercial</h2>
-        <p style="margin:0 0 1rem">Texas Accredited Commercial Specialist. Retail, office, flex, industrial, and land.</p>
+      <article class="door door--brass">
+        <h3>Commercial</h3>
+        <p>
+          Retail, office, flex, small industrial, multifamily, and land.
+          I hold the Texas Accredited Commercial Specialist designation, which
+          most residential agents do not.
+        </p>
         <a href="/commercial">Commercial services &rarr;</a>
       </article>
-      <article style="border-top:2px solid var(--jade-deep);padding-top:1.25rem">
-        <h2 style="font-size:var(--step-1);margin:0 0 .5rem">Property management</h2>
-        <p style="margin:0 0 1rem">50 doors under management. Published fees, licensed oversight, no call center.</p>
+      <article class="door door--deep">
+        <h3>Property management</h3>
+        <p>
+          Fifty doors under management. Fees published on the site, because
+          you should not have to fill out a form to learn what something costs.
+        </p>
         <a href="/owners">Owner services &rarr;</a>
       </article>
     </div>
   </section>
 
-  <section style="background:var(--paper);padding:clamp(2.5rem,6vw,4rem) var(--gutter);border-top:1px solid var(--mist);border-bottom:1px solid var(--mist)">
-    <div style="display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));max-width:60rem">
-      <div>
-        <p style="font-family:var(--font-display);font-size:var(--step-2);margin:0;color:var(--jade)">50</p>
-        <p style="margin:0;font-size:var(--step--1)">doors under management</p>
-      </div>
-      <div>
-        <p style="font-family:var(--font-display);font-size:var(--step-2);margin:0;color:var(--jade)">TACS</p>
-        <p style="margin:0;font-size:var(--step--1)">Texas Accredited Commercial Specialist</p>
-      </div>
-      <div>
-        <p style="font-family:var(--font-display);font-size:var(--step-2);margin:0;color:var(--jade)">5</p>
-        <p style="margin:0;font-size:var(--step--1)">Collin County cities served</p>
+  <section class="band">
+    <div class="wrap section">
+      <p class="eyebrow">Where I work</p>
+      <h2 style="margin-top:0">Five cities, one county, in detail.</h2>
+      <p class="prose">
+        I do not claim to know all of Dallas&ndash;Fort Worth. I know Collin County,
+        and these guides are written from actual transactions rather than
+        rewritten chamber-of-commerce copy.
+      </p>
+      <div class="grid grid-3 reveal" style="margin-top:2rem">
+        {guides.map((g) => (
+          <a class="card" href={`/neighborhoods/${g.data.slug}`}>
+            <h3>{g.data.city}</h3>
+            <p style="margin:0;font-size:var(--step--1);color:var(--ink-soft)">{g.data.schoolDistrict}</p>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  <section style="padding:clamp(3rem,8vw,5rem) var(--gutter)">
-    <h2 style="margin:0 0 1.5rem">Neighborhood guides</h2>
-    <div style="display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
-      {guides.map((g) => (
-        <a href={`/neighborhoods/${g.data.slug}`} style="text-decoration:none;color:inherit;border:1px solid var(--mist);padding:1.25rem;background:var(--paper)">
-          <h3 style="margin:0 0 .35rem;font-size:var(--step-1);color:var(--jade)">{g.data.city}</h3>
-          <p style="margin:0;font-size:var(--step--1)">{g.data.schoolDistrict}</p>
-        </a>
-      ))}
+  <section class="wrap section">
+    <div class="grid grid-2">
+      <div>
+        <p class="eyebrow">Working with me</p>
+        <h2 style="margin-top:0">Service in English and Mandarin.</h2>
+        <p class="prose">
+          I work with clients in English and Mandarin, and I arrange interpreters
+          for other languages at no cost to you. Contracts, disclosures, and
+          closing documents are explained in the language you are most
+          comfortable in &mdash; before you sign, not after.
+        </p>
+        <p><a href="/about">More about how I work &rarr;</a></p>
+      </div>
+      <div>
+        <p class="eyebrow">Relocating to Texas</p>
+        <h2 style="margin-top:0">New to the area?</h2>
+        <p class="prose">
+          Buyers moving here for work face questions local buyers never think
+          about: lender requirements on a visa, whether to buy before permanent
+          residency, how builder timelines interact with a start date, and which
+          school zones actually match the district maps.
+        </p>
+        <p><a href="/contact">Ask me about your situation &rarr;</a></p>
+      </div>
     </div>
   </section>
 
-  <section style="background:var(--jade);color:var(--snow);padding:clamp(3rem,8vw,5rem) var(--gutter)">
-    <h2 style="margin:0 0 1rem;color:var(--snow)">Let's talk.</h2>
-    <p style="margin:0 0 1.5rem;max-width:var(--measure)">
-      Call or text 972-815-7644, or email ling@xnjrealestate.com.
-    </p>
-    <a class="btn btn-primary" href="/contact">Get in touch</a>
+  <section class="band-jade">
+    <div class="wrap section">
+      <h2 style="margin-top:0">Let's talk about your property.</h2>
+      <p style="max-width:var(--measure)">
+        Call or text 972-815-7644. I answer my own phone, and there is no
+        obligation attached to a first conversation.
+      </p>
+      <div class="btn-row" style="margin-top:1.75rem">
+        <a class="btn btn-primary" href="/contact">Get in touch</a>
+        <a class="btn btn-ghost" href="tel:+19728157644">Call 972-815-7644</a>
+      </div>
+    </div>
   </section>
 </Base>

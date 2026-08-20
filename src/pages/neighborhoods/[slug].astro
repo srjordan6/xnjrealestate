@@ -14,24 +14,43 @@ const { Content } = await render(entry);
 const d = entry.data;
 ---
 <Base title={`${d.title} | Ling Jordan`} description={d.description} path={`/neighborhoods/${d.slug}`}>
-  <header style="padding:1.25rem var(--gutter);border-bottom:1px solid var(--mist)">
-    <a href="/" style="text-decoration:none;color:var(--jade)">&larr; Ling Jordan</a>
-  </header>
-  <article style="padding:clamp(2rem,6vw,4rem) var(--gutter);max-width:48rem">
-    <p style="margin:0 0 .5rem;font-size:var(--step--1);letter-spacing:.12em;text-transform:uppercase;color:var(--brass)">{d.county} County</p>
-    <h1 style="margin:0 0 1rem">{d.title}</h1>
-    <p style="margin:0 0 2rem;font-size:var(--step--1)">
-      {d.schoolDistrict} &middot; Zip codes: {d.zips.join(', ')}
+  <section class="wrap section narrow">
+    <p class="eyebrow">{d.county} County &middot; {d.schoolDistrict}</p>
+    <h1>{d.title}</h1>
+    <p class="lede">{d.description}</p>
+  </section>
+
+  <section class="wrap narrow" style="padding-bottom:clamp(3rem,8vw,5rem)">
+    <table>
+      <tbody>
+        <tr><td>School district</td><td>{d.schoolDistrict}</td></tr>
+        <tr><td>Zip codes</td><td>{d.zips.join(', ')}</td></tr>
+        {d.medianPrice && <tr><td>Median list price</td><td>${d.medianPrice.toLocaleString('en-US')}</td></tr>}
+      </tbody>
+    </table>
+    <p class="notice">
+      Median price is an estimate pending live NTREIS data. Verify before publishing.
     </p>
-    <Content />
-    <p style="margin-top:2.5rem">
+
+    <article class="prose">
+      <Content />
+    </article>
+
+    <div class="btn-row" style="margin-top:2.5rem">
       <a class="btn btn-primary" href="/homes">Search homes in {d.city}</a>
-    </p>
-  </article>
+      <a class="btn btn-secondary" href="/contact">Ask about {d.city}</a>
+    </div>
+  </section>
+
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Place",
-    "name": `${d.city}, TX`,
-    "address": { "@type": "PostalAddress", "addressLocality": d.city, "addressRegion": "TX", "addressCountry": "US" }
+    "name": `${d.city}, Texas`,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": d.city,
+      "addressRegion": "TX",
+      "addressCountry": "US"
+    }
   })} />
 </Base>

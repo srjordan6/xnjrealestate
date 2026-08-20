@@ -1,11 +1,22 @@
 ---
 import '../styles/tokens.css';
+import Header from '../components/Header.astro';
+import ContactBar from '../components/ContactBar.astro';
 import { getLocaleFromUrl, useTranslations, alternates, htmlLang } from '../i18n/utils';
 
-interface Props { title: string; description: string; path: string; }
-const { title, description, path } = Astro.props;
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  noindex?: boolean;
+}
+const { title, description, path, noindex = false } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
+const year = new Date().getFullYear();
+
+const TREC_CN = 'https://www.trec.texas.gov/sites/default/files/pdf-forms/CN%201-4-1_1.pdf';
+const TREC_IABS = 'https://www.trec.texas.gov/sites/default/files/pdf-forms/IABS%201-0.pdf';
 ---
 <!doctype html>
 <html lang={htmlLang[locale]}>
@@ -14,11 +25,18 @@ const t = useTranslations(locale);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
-    {alternates(path).map((a) => (
+    {!noindex && alternates(path).map((a) => (
       <link rel="alternate" hreflang={a.hreflang} href={new URL(a.href, Astro.site)} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={new URL(path, Astro.site)} />
+    {!noindex && <link rel="alternate" hreflang="x-default" href={new URL(path, Astro.site)} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500&display=swap" />
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -38,26 +56,78 @@ const t = useTranslations(locale);
         "addressCountry": "US"
       },
       "parentOrganization": {
-        "@type": "RealEstateAgent",
+        "@type": "RealEstateOrganization",
         "name": "Golden Realty",
-        "legalName": "H & W Golden Horse Inc"
+        "legalName": "H & W Golden Horse Inc",
+        "telephone": "+1-214-888-8036"
       },
-      "areaServed": ["Plano TX", "Frisco TX", "McKinney TX", "Prosper TX", "Allen TX"],
-      "knowsLanguage": ["en", "zh"]
+      "areaServed": ["Plano, TX", "Frisco, TX", "McKinney, TX", "Prosper, TX", "Allen, TX"],
+      "knowsLanguage": ["en", "zh"],
+      "hasCredential": "Texas Accredited Commercial Specialist (TACS)"
     })} />
   </head>
   <body>
-    <slot />
-    <footer style="background:var(--jade);color:var(--snow);padding:var(--gutter);font-size:var(--step--1)">
-      <p style="margin:0 0 .5rem">Xueling &ldquo;Ling&rdquo; Jordan, Sales Agent, TREC #693195</p>
-      <p style="margin:0 0 .5rem">Golden Realty &mdash; H &amp; W Golden Horse Inc, TREC #9010147</p>
-      <p style="margin:0 0 .5rem">7700 Preston Rd Ste 501, Frisco, TX 75034 &middot; 214-888-8036</p>
-      <p style="margin:0 0 .5rem">
-        <a style="color:var(--snow)" href="https://www.trec.texas.gov/sites/default/files/pdf-forms/CN%201-4-1_1.pdf">{t('footer.trec')}</a>
-        &middot;
-        <a style="color:var(--snow)" href="https://www.trec.texas.gov/sites/default/files/pdf-forms/IABS%201-0.pdf">{t('footer.iabs')}</a>
-      </p>
-      <p style="margin:0">{t('footer.eho')}</p>
+    <a href="#main" style="position:absolute;left:-9999px" onfocus="this.style.left='1rem';this.style.top='1rem';this.style.background='#fff';this.style.padding='.5rem;'">Skip to content</a>
+    <Header path={path} />
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap cols">
+        <div>
+          <h4>Ling Jordan</h4>
+          <p style="margin:0 0 .3rem">Xueling &ldquo;Ling&rdquo; Jordan</p>
+          <p style="margin:0 0 .3rem">Sales Agent, TREC License #693195</p>
+          <p style="margin:0">Texas Accredited Commercial Specialist</p>
+        </div>
+        <div>
+          <h4>Golden Realty</h4>
+          <p style="margin:0 0 .3rem">H &amp; W Golden Horse Inc</p>
+          <p style="margin:0 0 .3rem">Broker License #9010147</p>
+          <p style="margin:0 0 .3rem">7700 Preston Rd Ste 501<br />Frisco, TX 75034</p>
+          <p style="margin:0">Office <a href="tel:+12148888036">214-888-8036</a></p>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p style="margin:0 0 .3rem">Cell <a href="tel:+19728157644">972-815-7644</a></p>
+          <p style="margin:0 0 .3rem"><a href="mailto:ling@xnjrealestate.com">ling@xnjrealestate.com</a></p>
+          <p style="margin:0"><a href="/contact">Send a message</a></p>
+        </div>
+        <div>
+          <h4>Required notices</h4>
+          <p style="margin:0 0 .3rem"><a href={TREC_CN}>{t('footer.trec')}</a></p>
+          <p style="margin:0 0 .3rem"><a href={TREC_IABS}>{t('footer.iabs')}</a></p>
+          <p style="margin:0">{t('footer.eho')}</p>
+        </div>
+      </div>
+      <div class="wrap legal">
+        <p style="margin:0 0 .5rem">
+          All information is deemed reliable but not guaranteed and should be independently verified.
+          Ling Jordan is a licensed sales agent sponsored by Golden Realty (H &amp; W Golden Horse Inc)
+          and is not a licensed broker.
+        </p>
+        <p style="margin:0">&copy; {year} Xueling Jordan. Equal Housing Opportunity.</p>
+      </div>
     </footer>
+
+    <ContactBar />
+
+    <script>
+      const els = document.querySelectorAll('.reveal');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        els.forEach((e) => e.classList.add('in'));
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        els.forEach((e) => io.observe(e));
+      }
+    </script>
   </body>
 </html>

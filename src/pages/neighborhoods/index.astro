@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const guides = (await getCollection('neighborhoods'))
+  .filter((g) => g.data.locale === 'en')
+  .sort((a, b) => a.data.city.localeCompare(b.data.city));
+---
+<Base
+  title="Collin County Neighborhood Guides | Plano, Frisco, McKinney, Prosper, Allen"
+  description="Buyer guides to the five Collin County cities I work in: schools, price ranges, commute, and the tradeoffs nobody mentions on a listing."
+  path="/neighborhoods"
+>
+  <section class="wrap section narrow">
+    <p class="eyebrow">Neighborhood guides</p>
+    <h1>Five cities, covered honestly.</h1>
+    <p class="lede">
+      Each guide covers who the city actually fits, what homes cost, how the
+      schools are zoned, and the tradeoff people discover after they move in.
+    </p>
+  </section>
+
+  <section class="wrap" style="padding-bottom:clamp(3rem,8vw,5rem)">
+    <div class="grid grid-2 reveal">
+      {guides.map((g) => (
+        <a class="card" href={`/neighborhoods/${g.data.slug}`}>
+          <h3>{g.data.city}</h3>
+          <p style="margin:0 0 .5rem;color:var(--ink-soft)">{g.data.description}</p>
+          <p style="margin:0;font-size:var(--step--1);color:var(--ink-soft)">
+            {g.data.schoolDistrict} &middot; {g.data.zips.length} zip codes
+          </p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

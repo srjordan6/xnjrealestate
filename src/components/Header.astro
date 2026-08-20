@@ -1,0 +1,39 @@
+---
+import Seal from './Seal.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { getLocaleFromUrl, useTranslations, localizePath } from '../i18n/utils';
+
+interface Props { path: string; }
+const { path } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+const home = localizePath('/', locale);
+
+const links = [
+  { href: '/homes', label: t('nav.homes') },
+  { href: '/commercial', label: t('nav.commercial') },
+  { href: '/owners', label: t('nav.owners') },
+  { href: '/neighborhoods', label: t('nav.neighborhoods') },
+  { href: '/about', label: t('nav.about') },
+  { href: '/contact', label: t('nav.contact') }
+];
+---
+<header class="site-header">
+  <div class="wrap inner">
+    <a class="brand" href={home}>
+      <Seal size={40} />
+      <span>
+        <span class="brand-name">Ling Jordan</span>
+        <span class="brand-sub">Golden Realty &middot; Frisco, TX</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <span class="nav-links" style="display:flex;gap:1.4rem">
+        {links.map((l) => (
+          <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
+        ))}
+      </span>
+      <LanguageSwitcher path={path} />
+    </nav>
+  </div>
+</header>

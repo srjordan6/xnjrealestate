@@ -1,17 +1,114 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getCollection, render } from 'astro:content';
-
-const services = await getCollection('services');
-const entry = services.find((s) => s.data.slug === 'property-management' && s.data.locale === 'en')!;
-const { Content } = await render(entry);
 ---
-<Base title={`${entry.data.title} | Ling Jordan`} description={entry.data.description} path="/owners">
-  <header style="padding:1.25rem var(--gutter);border-bottom:1px solid var(--mist)">
-    <a href="/" style="text-decoration:none;color:var(--jade)">&larr; Ling Jordan</a>
-  </header>
-  <article style="padding:clamp(2rem,6vw,4rem) var(--gutter);max-width:48rem">
-    <h1 style="margin:0 0 2rem">{entry.data.title}</h1>
-    <Content />
-  </article>
+<Base
+  title="Property Management in Plano, Frisco, McKinney &amp; Allen | Ling Jordan"
+  description="Residential and commercial property management across Collin County. Fifty doors under management, published fees, licensed oversight."
+  path="/owners"
+>
+  <section class="wrap section narrow">
+    <p class="eyebrow">Property management</p>
+    <h1>Fifty doors, and a phone number that reaches a licensed agent.</h1>
+    <p class="lede">
+      Most management companies route you to a portal ticket and a call center.
+      When something goes wrong with your property, you talk to me.
+    </p>
+  </section>
+
+  <section class="band">
+    <div class="wrap section">
+      <h2 style="margin-top:0">What it costs</h2>
+      <p class="prose">
+        Published, because most companies will not. If a competitor requires a
+        form submission before telling you their management fee, that is worth
+        noticing.
+      </p>
+      <table>
+        <thead>
+          <tr><th scope="col">Service</th><th scope="col">Fee</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Monthly management</td><td>TODO-FEE% of collected rent</td></tr>
+          <tr><td>Leasing fee (new tenant)</td><td>TODO-FEE</td></tr>
+          <tr><td>Renewal fee</td><td>TODO-FEE</td></tr>
+          <tr><td>Maintenance coordination</td><td>TODO-FEE</td></tr>
+          <tr><td>Setup and onboarding</td><td>TODO-FEE</td></tr>
+          <tr><td>Eviction coordination</td><td>TODO-FEE</td></tr>
+        </tbody>
+      </table>
+      <p class="notice">
+        Placeholder. Replace every TODO-FEE with the actual number before this
+        page goes live &mdash; a published fee table is only an advantage if it
+        is accurate.
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="grid grid-2">
+      <div>
+        <h2 style="margin-top:0">What owners get</h2>
+        <ul class="clean">
+          <li>Tenant screening covering credit, verified income, rental history, and background</li>
+          <li>Marketing across NTREIS and the major syndication sites, with showings handled directly</li>
+          <li>Rent collection and a monthly owner statement you can hand to your accountant</li>
+          <li>Maintenance coordination through vendors I have used before and will use again</li>
+          <li>Texas Property Code compliance on notices, security deposits, and habitability</li>
+          <li>Annual rent analysis ahead of renewal, so pricing is a decision rather than a default</li>
+        </ul>
+      </div>
+      <div>
+        <h2 style="margin-top:0">Residential and commercial</h2>
+        <p>
+          Single-family rentals, small multifamily, and commercial assets are all
+          managed in-house. Commercial management is handled by someone who holds
+          the TACS designation and reads the lease before enforcing it.
+        </p>
+        <p><a href="/commercial">Commercial services &rarr;</a></p>
+
+        <h3>Owner portal</h3>
+        <p style="margin:0">
+          TODO-COPY &mdash; name the management software and link the owner login
+          once it is confirmed.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap section">
+      <h2 style="margin-top:0">Common owner questions</h2>
+      <h3>Do I have to sign a long contract?</h3>
+      <p>TODO-COPY &mdash; state the actual term and cancellation policy.</p>
+      <h3>What happens if a tenant stops paying?</h3>
+      <p>
+        Texas has a defined notice-to-vacate and eviction process with specific
+        timelines. I handle the notices, coordinate with counsel where required,
+        and keep you informed at each step rather than after the fact.
+      </p>
+      <h3>Who holds the security deposit?</h3>
+      <p>
+        Deposits are handled in accordance with Chapter 92 of the Texas Property
+        Code, including the accounting and return timelines that apply after a
+        tenant moves out.
+      </p>
+      <h3>Can you manage a property I am not ready to rent yet?</h3>
+      <p>TODO-COPY &mdash; answer honestly, including any minimum rent threshold.</p>
+    </div>
+  </section>
+
+  <section class="band-jade">
+    <div class="wrap section">
+      <h2 style="margin-top:0">What is my property earning?</h2>
+      <p style="max-width:var(--measure)">
+        Send me the address and I will tell you what it should rent for today,
+        what comparable properties are actually leasing at, and whether managing
+        it yourself still makes sense.
+      </p>
+      <div class="btn-row" style="margin-top:1.75rem">
+        <a class="btn btn-primary" href="/contact">Request a rent analysis</a>
+        <a class="btn btn-ghost" href="tel:+19728157644">Call 972-815-7644</a>
+      </div>
+    </div>
+  </section>
 </Base>

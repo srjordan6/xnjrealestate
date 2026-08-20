@@ -1,22 +1,79 @@
 ---
 import Base from '../layouts/Base.astro';
 import IdxSearch from '../components/IdxSearch.astro';
+import { getCollection } from 'astro:content';
+
+const guides = (await getCollection('neighborhoods'))
+  .filter((g) => g.data.locale === 'en')
+  .sort((a, b) => a.data.city.localeCompare(b.data.city));
 ---
 <Base
-  title="Search homes in Plano, Frisco, McKinney, Prosper, and Allen | Ling Jordan"
-  description="Search active listings across Collin County. Licensed Texas agent, service in English and Mandarin."
+  title="Search Homes for Sale in Collin County, TX | Ling Jordan"
+  description="Search active listings in Plano, Frisco, McKinney, Prosper, and Allen. Licensed Texas agent, service in English and Mandarin."
   path="/homes"
 >
-  <header style="padding:1.25rem var(--gutter);border-bottom:1px solid var(--mist)">
-    <a href="/" style="text-decoration:none;color:var(--jade)">&larr; Ling Jordan</a>
-  </header>
-  <section style="padding:clamp(2rem,6vw,4rem) var(--gutter) 1.5rem">
-    <h1 style="margin:0 0 1rem">Search homes</h1>
-    <p style="max-width:var(--measure);margin:0">
-      TODO-COPY — one line on what makes her search different, then the IDX widget.
+  <section class="wrap section narrow">
+    <p class="eyebrow">Residential</p>
+    <h1>Buying and selling homes.</h1>
+    <p class="lede">
+      Search every active listing in the market below. When you find something
+      worth seeing, call or text and I will get you in.
     </p>
   </section>
-  <section style="padding:0 var(--gutter) clamp(3rem,8vw,5rem)">
+
+  <section class="wrap" style="padding-bottom:clamp(3rem,8vw,5rem)">
     <IdxSearch />
+  </section>
+
+  <section class="band">
+    <div class="wrap section">
+      <div class="grid grid-2">
+        <div>
+          <h2 style="margin-top:0">If you are buying</h2>
+          <ul class="clean">
+            <li>Search set up to your criteria, with new listings sent as they hit the market</li>
+            <li>Showings scheduled around your work, including evenings and weekends</li>
+            <li>Builder contract review on new construction &mdash; those documents are written to protect the builder</li>
+            <li>Lender introductions, including lenders experienced with visa-holder and self-employed borrowers</li>
+            <li>Inspection, option period, and repair negotiation handled start to finish</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="margin-top:0">If you are selling</h2>
+          <ul class="clean">
+            <li>Pricing based on comparable closings, not an automated estimate</li>
+            <li>Prep list ranked by return, so you spend money only where it comes back</li>
+            <li>Professional photography and MLS syndication</li>
+            <li>Showing feedback reported to you honestly, including the unflattering parts</li>
+            <li>Offer review covering terms and financing strength, not just the headline number</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <h2 style="margin-top:0">Guides to the cities I work in</h2>
+    <div class="grid grid-3 reveal" style="margin-top:1.5rem">
+      {guides.map((g) => (
+        <a class="card" href={`/neighborhoods/${g.data.slug}`}>
+          <h3>{g.data.city}</h3>
+          <p style="margin:0;font-size:var(--step--1);color:var(--ink-soft)">{g.data.schoolDistrict}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="band-jade">
+    <div class="wrap section">
+      <h2 style="margin-top:0">What is my home worth?</h2>
+      <p style="max-width:var(--measure)">
+        I will pull comparable closings in your neighborhood and walk you through
+        the number in plain terms &mdash; no obligation, no sales pitch afterward.
+      </p>
+      <div class="btn-row" style="margin-top:1.75rem">
+        <a class="btn btn-primary" href="/contact">Request a valuation</a>
+      </div>
+    </div>
   </section>
 </Base>

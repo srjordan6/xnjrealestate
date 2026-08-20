@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /broker-review
+
+Sitemap: https://xnjrealestate.com/sitemap-index.xml

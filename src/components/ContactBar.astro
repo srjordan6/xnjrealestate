@@ -1,0 +1,9 @@
+---
+import { getLocaleFromUrl, useTranslations } from '../i18n/utils';
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+<div class="contact-bar" role="group" aria-label="Contact Ling">
+  <a href="tel:+19728157644">{t('cta.call')} 972-815-7644</a>
+  <a href="sms:+19728157644">{t('cta.text')}</a>
+</div>
