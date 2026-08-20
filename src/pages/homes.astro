@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import IdxSearch from '../components/IdxSearch.astro';
+---
+<Base
+  title="Search homes in Plano, Frisco, McKinney, Prosper, and Allen | Ling Jordan"
+  description="Search active listings across Collin County. Licensed Texas agent, service in English and Mandarin."
+  path="/homes"
+>
+  <header style="padding:1.25rem var(--gutter);border-bottom:1px solid var(--mist)">
+    <a href="/" style="text-decoration:none;color:var(--jade)">&larr; Ling Jordan</a>
+  </header>
+  <section style="padding:clamp(2rem,6vw,4rem) var(--gutter) 1.5rem">
+    <h1 style="margin:0 0 1rem">Search homes</h1>
+    <p style="max-width:var(--measure);margin:0">
+      TODO-COPY — one line on what makes her search different, then the IDX widget.
+    </p>
+  </section>
+  <section style="padding:0 var(--gutter) clamp(3rem,8vw,5rem)">
+    <IdxSearch />
+  </section>
+</Base>

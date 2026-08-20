@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('neighborhoods');
+  return guides
+    .filter((g) => g.data.locale === 'en')
+    .map((g) => ({ params: { slug: g.data.slug }, props: { entry: g } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<Base title={`${d.title} | Ling Jordan`} description={d.description} path={`/neighborhoods/${d.slug}`}>
+  <header style="padding:1.25rem var(--gutter);border-bottom:1px solid var(--mist)">
+    <a href="/" style="text-decoration:none;color:var(--jade)">&larr; Ling Jordan</a>
+  </header>
+  <article style="padding:clamp(2rem,6vw,4rem) var(--gutter);max-width:48rem">
+    <p style="margin:0 0 .5rem;font-size:var(--step--1);letter-spacing:.12em;text-transform:uppercase;color:var(--brass)">{d.county} County</p>
+    <h1 style="margin:0 0 1rem">{d.title}</h1>
+    <p style="margin:0 0 2rem;font-size:var(--step--1)">
+      {d.schoolDistrict} &middot; Zip codes: {d.zips.join(', ')}
+    </p>
+    <Content />
+    <p style="margin-top:2.5rem">
+      <a class="btn btn-primary" href="/homes">Search homes in {d.city}</a>
+    </p>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Place",
+    "name": `${d.city}, TX`,
+    "address": { "@type": "PostalAddress", "addressLocality": d.city, "addressRegion": "TX", "addressCountry": "US" }
+  })} />
+</Base>
