@@ -1,0 +1,63 @@
+---
+import '../styles/tokens.css';
+import { getLocaleFromUrl, useTranslations, alternates, htmlLang } from '../i18n/utils';
+
+interface Props { title: string; description: string; path: string; }
+const { title, description, path } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+<!doctype html>
+<html lang={htmlLang[locale]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    {alternates(path).map((a) => (
+      <link rel="alternate" hreflang={a.hreflang} href={new URL(a.href, Astro.site)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(path, Astro.site)} />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500&display=swap" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "RealEstateAgent",
+      "name": "Ling Jordan",
+      "legalName": "Xueling Jordan",
+      "url": "https://xnjrealestate.com",
+      "telephone": "+1-972-815-7644",
+      "email": "ling@xnjrealestate.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "7700 Preston Rd Ste 501",
+        "addressLocality": "Frisco",
+        "addressRegion": "TX",
+        "postalCode": "75034",
+        "addressCountry": "US"
+      },
+      "parentOrganization": {
+        "@type": "RealEstateAgent",
+        "name": "Golden Realty",
+        "legalName": "H & W Golden Horse Inc"
+      },
+      "areaServed": ["Plano TX", "Frisco TX", "McKinney TX", "Prosper TX", "Allen TX"],
+      "knowsLanguage": ["en", "zh"]
+    })} />
+  </head>
+  <body>
+    <slot />
+    <footer style="background:var(--jade);color:var(--snow);padding:var(--gutter);font-size:var(--step--1)">
+      <p style="margin:0 0 .5rem">Xueling &ldquo;Ling&rdquo; Jordan, Sales Agent, TREC #693195</p>
+      <p style="margin:0 0 .5rem">Golden Realty &mdash; H &amp; W Golden Horse Inc, TREC #9010147</p>
+      <p style="margin:0 0 .5rem">7700 Preston Rd Ste 501, Frisco, TX 75034 &middot; 214-888-8036</p>
+      <p style="margin:0 0 .5rem">
+        <a style="color:var(--snow)" href="https://www.trec.texas.gov/sites/default/files/pdf-forms/CN%201-4-1_1.pdf">{t('footer.trec')}</a>
+        &middot;
+        <a style="color:var(--snow)" href="https://www.trec.texas.gov/sites/default/files/pdf-forms/IABS%201-0.pdf">{t('footer.iabs')}</a>
+      </p>
+      <p style="margin:0">{t('footer.eho')}</p>
+    </footer>
+  </body>
+</html>

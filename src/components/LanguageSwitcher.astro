@@ -1,0 +1,17 @@
+---
+import { getLocaleFromUrl, localizePath, locales } from '../i18n/utils';
+interface Props { path: string; }
+const { path } = Astro.props;
+const current = getLocaleFromUrl(Astro.url);
+const labels: Record<string, string> = { en: 'English', zh: '中文' };
+---
+<nav aria-label="Language" style="display:flex;gap:1rem;font-size:var(--step--1)">
+  {locales.map((l) => (
+    <a
+      href={localizePath(path, l)}
+      hreflang={l}
+      aria-current={l === current ? 'true' : undefined}
+      style={l === current ? 'font-weight:500;text-decoration:none' : undefined}
+    >{labels[l]}</a>
+  ))}
+</nav>

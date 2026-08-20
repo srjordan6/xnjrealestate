@@ -1,0 +1,22 @@
+---
+// IDX vendor widget mount. Client-side only, never indexable.
+// CONFIRM the vendor supports NTREIS (North Texas Real Estate Information Systems)
+// before purchase. Replace the script URL below.
+interface Props { widgetId?: string; }
+const { widgetId } = Astro.props;
+---
+<div id="idx-mount" data-widget={widgetId} style="min-height:520px">
+  <noscript>
+    <p>Property search needs JavaScript. Call or text 972-815-7644 and Ling will send you matching listings.</p>
+  </noscript>
+</div>
+<script>
+  const mount = document.getElementById('idx-mount');
+  if (mount && !document.getElementById('idx-vendor')) {
+    const s = document.createElement('script');
+    s.id = 'idx-vendor';
+    s.src = 'https://REPLACE-WITH-VENDOR-SCRIPT-URL';
+    s.async = true;
+    document.head.appendChild(s);
+  }
+</script>
