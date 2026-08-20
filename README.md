@@ -10,25 +10,25 @@ Korean and Spanish scaffolded in the i18n config.
 
 ## Deploy
 
-Push to `main`. Either Cloudflare's Git integration or the GitHub Actions
-workflow will build and deploy — pick ONE, not both, or every push
-double-deploys. If you use Cloudflare's Git integration, delete
-`.github/workflows/deploy.yml`.
+Cloudflare Workers Builds is connected to this repo. Push to `main` to deploy;
+non-production branches get preview URLs. No GitHub secrets needed — Cloudflare
+manages its own token.
 
-## Cloudflare Pages build settings
+The GitHub Actions workflow is parked at `.github/deploy.yml.disabled`. Do not
+move it back into `.github/workflows/` unless you also disconnect Workers
+Builds, or every push will deploy twice.
+
+## Cloudflare Workers Builds settings
 
 | Field | Value |
 | --- | --- |
-| Framework preset | Astro |
-| Build command | `pnpm build` |
-| Output directory | `dist` |
+| Build command | `pnpm install && pnpm build` |
+| Deploy command | `npx wrangler deploy` |
 | Production branch | `main` |
+| Non-production branch builds | On |
 | Env var | `NODE_VERSION` = `22` |
 
-## GitHub secrets (only if using Actions)
-
-- `CLOUDFLARE_API_TOKEN` — Account → Cloudflare Pages → Edit
-- `CLOUDFLARE_ACCOUNT_ID`
+Static assets are served from `dist` per `wrangler.toml`.
 
 ## Before launch
 
