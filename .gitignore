@@ -6,3 +6,7 @@ dist/
 .wrangler/
 .DS_Store
 *.log
+
+# npm lockfile is platform-specific when generated in a container;
+# Cloudflare builds use the pnpm command in the build config.
+package-lock.json
