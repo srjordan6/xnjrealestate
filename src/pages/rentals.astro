@@ -76,7 +76,7 @@ const STATUS = {
           data-rent={r.rent}
         >
           <div class="rshot">
-            <img src={r.photo} alt={`${r.address}, ${r.city}, Texas`} loading="lazy" width="903" height="1278" />
+            <img src={r.photo} alt={`${r.address}, ${r.city}, Texas`} loading="lazy" width="903" height="523" />
             {STATUS[r.status] && <span class="rflag">{STATUS[r.status]}</span>}
             <span class="rprice">{money(r.rent)}<small>/mo</small></span>
           </div>
