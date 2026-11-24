@@ -1,0 +1,220 @@
+---
+import Base from '../layouts/Base.astro';
+import rentals from '../data/rentals.json';
+
+const sorted = [...rentals].sort((a, b) => b.rent - a.rent);
+const cities = [...new Set(rentals.map((r) => r.city))].sort();
+const money = (n) => '$' + n.toLocaleString('en-US');
+const STATUS = {
+  'just-listed': 'Just listed',
+  'available-jan': 'Available Jan 1',
+  available: ''
+};
+---
+<Base
+  title="Homes for Rent in DFW | Ling Jordan, Golden Realty"
+  description="Current rental homes managed by Ling Jordan across the Dallas-Fort Worth area. Filter by city, bedrooms, and budget, then call or text to schedule a showing."
+  path="/rentals"
+>
+  <section class="wrap section narrow">
+    <p class="eyebrow">Rentals</p>
+    <h1>Homes available now.</h1>
+    <p class="lede">
+      Every home below is managed directly by Ling. Filter to what you need, then
+      call or text to see it. No application fee to ask a question.
+    </p>
+  </section>
+
+  <section class="wrap" style="padding-bottom:1.25rem">
+    <div class="filters">
+      <div class="f">
+        <label for="f-city">City</label>
+        <select id="f-city">
+          <option value="">All cities</option>
+          {cities.map((c) => <option value={c}>{c}</option>)}
+        </select>
+      </div>
+      <div class="f">
+        <label for="f-beds">Bedrooms</label>
+        <select id="f-beds">
+          <option value="0">Any</option>
+          <option value="2">2 or more</option>
+          <option value="3">3 or more</option>
+          <option value="4">4 or more</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <div class="f">
+        <label for="f-max">Max rent</label>
+        <select id="f-max">
+          <option value="99999">Any</option>
+          <option value="1800">$1,800</option>
+          <option value="2200">$2,200</option>
+          <option value="2700">$2,700</option>
+          <option value="3600">$3,600</option>
+        </select>
+      </div>
+      <div class="f">
+        <label for="f-sort">Sort</label>
+        <select id="f-sort">
+          <option value="hi">Price: high to low</option>
+          <option value="lo">Price: low to high</option>
+          <option value="bed">Most bedrooms</option>
+        </select>
+      </div>
+      <p class="tally" id="tally">{rentals.length} homes</p>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:clamp(3rem,8vw,5rem)">
+    <div class="rgrid" id="rgrid">
+      {sorted.map((r) => (
+        <article
+          class="rcard"
+          data-city={r.city}
+          data-beds={r.beds}
+          data-rent={r.rent}
+        >
+          <div class="rshot">
+            <img src={r.photo} alt={`${r.address}, ${r.city}, Texas`} loading="lazy" width="903" height="1278" />
+            {STATUS[r.status] && <span class="rflag">{STATUS[r.status]}</span>}
+            <span class="rprice">{money(r.rent)}<small>/mo</small></span>
+          </div>
+          <div class="rbody">
+            <p class="rcity">{r.city}, TX</p>
+            <h2 class="raddr">{r.address}</h2>
+            <p class="rspecs">
+              <span>{r.beds} bed</span><span>{r.baths} bath</span>
+            </p>
+            <ul class="rchips">
+              {r.features.map((f) => <li>{f}</li>)}
+            </ul>
+            <div class="racts">
+              <a class="btn btn-primary" href="tel:+19728157644">Call</a>
+              <a class="btn btn-secondary" href="sms:+19728157644">Text</a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="rempty" id="rempty" hidden>
+      No homes match those filters right now. Widen the budget, or text Ling at
+      972-815-7644 and she will watch for one.
+    </p>
+  </section>
+
+  <section class="band">
+    <div class="wrap section narrow">
+      <h2 style="margin-top:0">Renting from Ling</h2>
+      <p>
+        Ling manages these homes herself, so the person who shows you the property
+        is the person who handles the lease and the maintenance after you move in.
+      </p>
+      <h3>What you will need to apply</h3>
+      <ul class="clean">
+        <li>Photo identification for every adult who will live in the home</li>
+        <li>Proof of income, usually recent pay stubs or an offer letter</li>
+        <li>Rental history and contact information for prior landlords</li>
+        <li>Consent to a credit and background check</li>
+      </ul>
+      <p>
+        Applications are reviewed in the order received. Screening criteria are
+        applied the same way to every applicant.
+      </p>
+    </div>
+  </section>
+
+  <section class="band-jade">
+    <div class="wrap section">
+      <h2 style="margin-top:0">Own a rental property?</h2>
+      <p style="max-width:var(--measure)">
+        These homes are part of the portfolio Ling manages across North Texas.
+        If you own a property and want to know what it should be earning, she
+        will run the numbers.
+      </p>
+      <div class="btn-row" style="margin-top:1.75rem">
+        <a class="btn btn-primary" href="/owners">Owner services</a>
+        <a class="btn btn-ghost" href="tel:+19728157644">Call 972-815-7644</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .filters { display:flex; gap:.75rem; flex-wrap:wrap; align-items:flex-end;
+    background:var(--paper); border:1px solid var(--mist); padding:1rem; }
+  .f { display:flex; flex-direction:column; gap:.3rem; flex:1 1 9rem; min-width:0; }
+  .f label { font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--ink-soft); font-weight:500; }
+  .filters select { font:inherit; font-size:.9rem; color:var(--ink);
+    background:var(--snow); border:1px solid var(--mist); border-radius:2px;
+    padding:.5rem; width:100%; min-width:0; }
+  .tally { flex:0 0 auto; margin:0 0 .55rem; font-size:.85rem;
+    color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+
+  .rgrid { display:grid; gap:1.5rem;
+    grid-template-columns:repeat(auto-fill,minmax(265px,1fr)); }
+  .rcard { background:var(--paper); border:1px solid var(--mist);
+    display:flex; flex-direction:column; overflow:hidden; }
+  .rshot { position:relative; background:var(--mist); }
+  .rshot img { display:block; width:100%; max-width:100%; height:auto; }
+  .rprice { position:absolute; left:0; bottom:0; background:var(--jade-deep);
+    color:var(--snow); font-family:var(--font-display); font-weight:500;
+    font-size:1.3rem; padding:.3rem .75rem; font-variant-numeric:tabular-nums; }
+  .rprice small { font-family:var(--font-body); font-size:.68rem;
+    font-weight:500; opacity:.8; }
+  .rflag { position:absolute; right:.5rem; top:.5rem; background:var(--brass);
+    color:#fff; font-size:.66rem; font-weight:500; letter-spacing:.07em;
+    text-transform:uppercase; padding:.28rem .55rem; }
+  .rbody { padding:1rem; display:flex; flex-direction:column; gap:.6rem; flex:1; }
+  .rcity { margin:0; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--brass-dark); font-weight:500; }
+  .raddr { margin:0; font-size:1.05rem; }
+  .rspecs { display:flex; gap:1rem; margin:0; font-size:.88rem;
+    color:var(--ink-soft); border-block:1px solid var(--mist);
+    padding-block:.5rem; font-variant-numeric:tabular-nums; }
+  .rchips { display:flex; flex-wrap:wrap; gap:.35rem; list-style:none;
+    padding:0; margin:0; }
+  .rchips li { font-size:.75rem; background:var(--snow); color:var(--ink-soft);
+    padding:.2rem .5rem; }
+  .racts { display:flex; gap:.5rem; margin-top:auto; padding-top:.5rem; }
+  .racts .btn { flex:1; text-align:center; padding:.6rem; font-size:.88rem; }
+  .rempty { text-align:center; padding:3rem 1rem; color:var(--ink-soft); }
+</style>
+
+<script>
+  const grid = document.getElementById('rgrid');
+  const empty = document.getElementById('rempty');
+  const tally = document.getElementById('tally');
+  const city = document.getElementById('f-city');
+  const beds = document.getElementById('f-beds');
+  const max = document.getElementById('f-max');
+  const sortBy = document.getElementById('f-sort');
+  const cards = Array.from(grid.children);
+
+  function apply() {
+    const c = city.value, b = Number(beds.value), m = Number(max.value);
+    let shown = 0;
+    cards.forEach((el) => {
+      const ok =
+        (!c || el.dataset.city === c) &&
+        Number(el.dataset.beds) >= b &&
+        Number(el.dataset.rent) <= m;
+      el.hidden = !ok;
+      if (ok) shown++;
+    });
+    const order = cards.slice().sort((x, y) => {
+      const rx = Number(x.dataset.rent), ry = Number(y.dataset.rent);
+      if (sortBy.value === 'lo') return rx - ry;
+      if (sortBy.value === 'bed')
+        return Number(y.dataset.beds) - Number(x.dataset.beds) || ry - rx;
+      return ry - rx;
+    });
+    order.forEach((el) => grid.appendChild(el));
+    tally.textContent = shown === 1 ? '1 home' : shown + ' homes';
+    empty.hidden = shown > 0;
+  }
+
+  [city, beds, max, sortBy].forEach((el) => el.addEventListener('change', apply));
+  apply();
+</script>
