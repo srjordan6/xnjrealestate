@@ -1,0 +1,88 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base
+  title="联系 Ling Jordan | Frisco, TX"
+  description="致电、发短信或发邮件给 Ling Jordan。持照德州房地产经纪，隶属 Golden Realty。"
+  path="/contact"
+>
+  <section class="wrap section narrow">
+    <p class="eyebrow">联系方式</p>
+    <h1>联系我</h1>
+    <p class="lede">
+      电话或短信最快。我自己接电话，第一次沟通不需要承担任何义务。
+    </p>
+  </section>
+
+  <section class="wrap" style="padding-bottom:clamp(3rem,8vw,5rem)">
+    <div class="grid grid-2">
+      <div>
+        <h2 style="margin-top:0">直接联系</h2>
+        <table>
+          <tbody>
+            <tr><td>手机</td><td><a href="tel:+19728157644">972-815-7644</a></td></tr>
+            <tr><td>办公室</td><td><a href="tel:+12148888036">214-888-8036</a></td></tr>
+            <tr><td>邮箱</td><td><a href="mailto:ling@xnjrealestate.com">ling@xnjrealestate.com</a></td></tr>
+          </tbody>
+        </table>
+        <h3>办公地址</h3>
+        <p style="margin:0">
+          Golden Realty<br />7700 Preston Rd Ste 501<br />Frisco, TX 75034
+        </p>
+      </div>
+      <div>
+        <h2 style="margin-top:0">留言</h2>
+        <form id="lead" novalidate>
+          <p style="margin:0 0 1rem">
+            <label for="name" style="display:block;font-size:var(--step--1);margin-bottom:.3rem">姓名</label>
+            <input id="name" name="name" type="text" autocomplete="name" required
+              style="width:100%;padding:.7rem;border:1px solid var(--mist);background:var(--paper);font:inherit" />
+          </p>
+          <p style="margin:0 0 1rem">
+            <label for="phone" style="display:block;font-size:var(--step--1);margin-bottom:.3rem">电话</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" required
+              style="width:100%;padding:.7rem;border:1px solid var(--mist);background:var(--paper);font:inherit" />
+          </p>
+          <p style="margin:0 0 1rem">
+            <label for="topic" style="display:block;font-size:var(--step--1);margin-bottom:.3rem">需要什么帮助</label>
+            <select id="topic" name="topic"
+              style="width:100%;padding:.7rem;border:1px solid var(--mist);background:var(--paper);font:inherit">
+              <option>买房</option><option>卖房</option><option>租房</option>
+              <option>商业地产</option><option>物业管理</option><option>其他</option>
+            </select>
+          </p>
+          <p style="margin:0 0 1.25rem">
+            <label for="message" style="display:block;font-size:var(--step--1);margin-bottom:.3rem">补充说明（选填）</label>
+            <textarea id="message" name="message" rows="4"
+              style="width:100%;padding:.7rem;border:1px solid var(--mist);background:var(--paper);font:inherit"></textarea>
+          </p>
+          <p id="err" role="alert" style="display:none;color:#a32d2d;font-size:var(--step--1);margin:0 0 1rem"></p>
+          <button class="btn btn-primary" type="submit" style="cursor:pointer">发送</button>
+        </form>
+        <p class="notice" style="margin-top:1.5rem">
+          表单尚未接入后端。上线前需要完成 Cloudflare Worker 接口。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('lead');
+    const err = document.getElementById('err');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name');
+      const phone = document.getElementById('phone');
+      if (!name.value.trim() || !phone.value.trim()) {
+        err.textContent = '请填写姓名和电话，方便我联系您。';
+        err.style.display = 'block';
+        return;
+      }
+      err.style.display = 'none';
+      alert('表单尚未接入，请致电或发短信 972-815-7644。');
+    });
+    ['name','phone'].forEach((id) => {
+      document.getElementById(id)?.addEventListener('input', () => { err.style.display = 'none'; });
+    });
+  </script>
+</Base>

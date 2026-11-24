@@ -1,0 +1,175 @@
+---
+import Base from '../../layouts/Base.astro';
+import rentals from '../../data/rentals.json';
+
+const sorted = [...rentals].sort((a, b) => b.rent - a.rent);
+const cities = [...new Set(rentals.map((r) => r.city))].sort();
+const money = (n) => '$' + n.toLocaleString('en-US');
+const STATUS = { 'just-listed': '新上架', 'available-jan': '1月1日可入住', available: '' };
+---
+<Base
+  title="达拉斯地区出租房源 | Ling Jordan, Golden Realty"
+  description="Ling Jordan 直接管理的出租房源。可按城市、卧室数量和租金筛选，直接致电或发短信预约看房。"
+  path="/rentals"
+>
+  <section class="wrap section narrow">
+    <p class="eyebrow">出租房源</p>
+    <h1>现在可租的房子</h1>
+    <p class="lede">
+      下面每一套都由我本人管理。先筛选出符合条件的，再打电话或发短信约看房。
+      咨询不收任何费用。
+    </p>
+  </section>
+
+  <section class="wrap" style="padding-bottom:1.25rem">
+    <div class="filters">
+      <div class="f">
+        <label for="f-city">城市</label>
+        <select id="f-city"><option value="">全部城市</option>{cities.map((c) => <option value={c}>{c}</option>)}</select>
+      </div>
+      <div class="f">
+        <label for="f-beds">卧室</label>
+        <select id="f-beds">
+          <option value="0">不限</option><option value="2">2 间以上</option>
+          <option value="3">3 间以上</option><option value="4">4 间以上</option><option value="5">5 间</option>
+        </select>
+      </div>
+      <div class="f">
+        <label for="f-max">租金上限</label>
+        <select id="f-max">
+          <option value="99999">不限</option><option value="1800">$1,800</option>
+          <option value="2200">$2,200</option><option value="2700">$2,700</option><option value="3600">$3,600</option>
+        </select>
+      </div>
+      <div class="f">
+        <label for="f-sort">排序</label>
+        <select id="f-sort">
+          <option value="hi">租金由高到低</option><option value="lo">租金由低到高</option><option value="bed">卧室数量最多</option>
+        </select>
+      </div>
+      <p class="tally" id="tally">{rentals.length} 套</p>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:clamp(3rem,8vw,5rem)">
+    <div class="rgrid" id="rgrid">
+      {sorted.map((r) => (
+        <article class="rcard" data-city={r.city} data-beds={r.beds} data-rent={r.rent}>
+          <div class="rshot">
+            <img src={r.photo} alt={`${r.address}, ${r.city}`} loading="lazy" width="903" height="523" />
+            {STATUS[r.status] && <span class="rflag">{STATUS[r.status]}</span>}
+            <span class="rprice">{money(r.rent)}<small>/月</small></span>
+          </div>
+          <div class="rbody">
+            <p class="rcity">{r.city}, TX</p>
+            <h2 class="raddr">{r.address}</h2>
+            <p class="rspecs"><span>{r.beds} 卧</span><span>{r.baths} 卫</span></p>
+            <ul class="rchips">{r.features.map((f) => <li>{f}</li>)}</ul>
+            <div class="racts">
+              <a class="btn btn-primary" href="tel:+19728157644">致电</a>
+              <a class="btn btn-secondary" href="sms:+19728157644">短信</a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="rempty" id="rempty" hidden>
+      目前没有符合条件的房源。可以放宽租金上限，或发短信到 972-815-7644，有合适的我会通知您。
+    </p>
+  </section>
+
+  <section class="band">
+    <div class="wrap section narrow">
+      <h2 style="margin-top:0">申请租房需要准备什么</h2>
+      <ul class="clean">
+        <li>每位成年入住人的身份证件</li>
+        <li>收入证明，通常是近期工资单或录用通知书</li>
+        <li>租房记录以及前房东的联系方式</li>
+        <li>同意进行信用和背景审查</li>
+      </ul>
+      <p>
+        申请按收到顺序审核。审核标准对所有申请人一视同仁。
+      </p>
+    </div>
+  </section>
+
+  <section class="band-jade">
+    <div class="wrap section">
+      <h2 style="margin-top:0">您自己有房要出租吗？</h2>
+      <p style="max-width:var(--measure)">
+        这些房源是我在北德州管理的物业组合的一部分。如果您想知道自己的房子应该能租多少钱，
+        我可以帮您算一下。
+      </p>
+      <div class="btn-row" style="margin-top:1.75rem">
+        <a class="btn btn-primary" href="/zh/owners">业主服务</a>
+        <a class="btn btn-ghost" href="tel:+19728157644">致电 972-815-7644</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .filters { display:flex; gap:.75rem; flex-wrap:wrap; align-items:flex-end;
+    background:var(--paper); border:1px solid var(--mist); padding:1rem; }
+  .f { display:flex; flex-direction:column; gap:.3rem; flex:1 1 9rem; min-width:0; }
+  .f label { font-size:.68rem; letter-spacing:.1em; color:var(--ink-soft); font-weight:500; }
+  .filters select { font:inherit; font-size:.9rem; color:var(--ink);
+    background:var(--snow); border:1px solid var(--mist); border-radius:2px;
+    padding:.5rem; width:100%; min-width:0; }
+  .tally { flex:0 0 auto; margin:0 0 .55rem; font-size:.85rem;
+    color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+  .rgrid { display:grid; gap:1.5rem; grid-template-columns:repeat(auto-fill,minmax(265px,1fr)); }
+  .rcard { background:var(--paper); border:1px solid var(--mist);
+    display:flex; flex-direction:column; overflow:hidden; }
+  .rcard[hidden] { display:none; }
+  .rshot { position:relative; background:var(--mist); }
+  .rshot img { display:block; width:100%; max-width:100%; height:auto; }
+  .rprice { position:absolute; left:0; bottom:0; background:var(--jade-deep);
+    color:var(--snow); font-family:var(--font-display); font-weight:500;
+    font-size:1.3rem; padding:.3rem .75rem; font-variant-numeric:tabular-nums; }
+  .rprice small { font-family:var(--font-body); font-size:.68rem; font-weight:500; opacity:.8; }
+  .rflag { position:absolute; right:.5rem; top:.5rem; background:var(--brass);
+    color:#fff; font-size:.7rem; font-weight:500; padding:.28rem .55rem; }
+  .rbody { padding:1rem; display:flex; flex-direction:column; gap:.6rem; flex:1; }
+  .rcity { margin:0; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--brass-dark); font-weight:500; }
+  .raddr { margin:0; font-size:1.05rem; }
+  .rspecs { display:flex; gap:1rem; margin:0; font-size:.9rem; color:var(--ink-soft);
+    border-block:1px solid var(--mist); padding-block:.5rem; font-variant-numeric:tabular-nums; }
+  .rchips { display:flex; flex-wrap:wrap; gap:.35rem; list-style:none; padding:0; margin:0; }
+  .rchips li { font-size:.78rem; background:var(--snow); color:var(--ink-soft); padding:.2rem .5rem; }
+  .racts { display:flex; gap:.5rem; margin-top:auto; padding-top:.5rem; }
+  .racts .btn { flex:1; text-align:center; padding:.6rem; font-size:.9rem; }
+  .rempty { text-align:center; padding:3rem 1rem; color:var(--ink-soft); }
+</style>
+
+<script>
+  const grid = document.getElementById('rgrid');
+  const empty = document.getElementById('rempty');
+  const tally = document.getElementById('tally');
+  const city = document.getElementById('f-city');
+  const beds = document.getElementById('f-beds');
+  const max = document.getElementById('f-max');
+  const sortBy = document.getElementById('f-sort');
+  const cards = Array.from(grid.children);
+  function apply() {
+    const c = city.value, b = Number(beds.value), m = Number(max.value);
+    let shown = 0;
+    cards.forEach((el) => {
+      const ok = (!c || el.dataset.city === c) && Number(el.dataset.beds) >= b && Number(el.dataset.rent) <= m;
+      el.hidden = !ok;
+      if (ok) shown++;
+    });
+    const order = cards.slice().sort((x, y) => {
+      const rx = Number(x.dataset.rent), ry = Number(y.dataset.rent);
+      if (sortBy.value === 'lo') return rx - ry;
+      if (sortBy.value === 'bed') return Number(y.dataset.beds) - Number(x.dataset.beds) || ry - rx;
+      return ry - rx;
+    });
+    order.forEach((el) => grid.appendChild(el));
+    tally.textContent = shown + ' 套';
+    empty.hidden = shown > 0;
+  }
+  [city, beds, max, sortBy].forEach((el) => el.addEventListener('change', apply));
+  apply();
+</script>

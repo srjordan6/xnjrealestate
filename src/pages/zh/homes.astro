@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import IdxSearch from '../../components/IdxSearch.astro';
+---
+<Base
+  title="买房与卖房 | Ling Jordan, Golden Realty"
+  description="科林县及达拉斯地区住宅买卖服务。持照德州经纪人，提供中文服务。"
+  path="/homes"
+>
+  <section class="wrap section narrow">
+    <p class="eyebrow">住宅</p>
+    <h1>买房与卖房</h1>
+    <p class="lede">
+      下面可以搜索市场上的在售房源。看到想实地看的房子，打电话或发短信给我安排。
+    </p>
+  </section>
+
+  <section class="wrap" style="padding-bottom:clamp(3rem,8vw,5rem)">
+    <IdxSearch />
+  </section>
+
+  <section class="band">
+    <div class="wrap section">
+      <div class="grid grid-2">
+        <div>
+          <h2 style="margin-top:0">如果您是买家</h2>
+          <ul class="clean">
+            <li>按您的条件设置搜索，新房源一上市就发给您</li>
+            <li>看房时间配合您的工作安排，包括晚上和周末</li>
+            <li>新建房的开发商合同审阅，那份文件是为保护开发商写的</li>
+            <li>介绍贷款机构，包括熟悉签证持有人和自雇人士的贷款专员</li>
+            <li>验房、选择期和维修谈判全程负责</li>
+          </ul>
+        </div>
+        <div>
+          <h2 style="margin-top:0">如果您是卖家</h2>
+          <ul class="clean">
+            <li>定价依据实际成交的可比房源，不是网站上的自动估价</li>
+            <li>按投入产出排序的准备清单，钱只花在能收回来的地方</li>
+            <li>专业摄影和 MLS 多平台分发</li>
+            <li>如实转达看房反馈，包括不好听的部分</li>
+            <li>报价分析看条款和贷款可靠性，而不只是看最高的那个数字</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band-jade">
+    <div class="wrap section">
+      <h2 style="margin-top:0">我的房子值多少钱？</h2>
+      <p style="max-width:var(--measure)">
+        我会调出您社区的实际成交记录，用中文把这个数字解释给您听。不收费，之后也不会推销。
+      </p>
+      <div class="btn-row" style="margin-top:1.75rem">
+        <a class="btn btn-primary" href="/zh/contact">索取估价</a>
+      </div>
+    </div>
+  </section>
+</Base>

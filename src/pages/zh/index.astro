@@ -1,24 +1,29 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Seal from '../../components/Seal.astro';
+import { getCollection } from 'astro:content';
+
+const guides = (await getCollection('neighborhoods'))
+  .filter((g) => g.data.locale === 'en')
+  .sort((a, b) => a.data.city.localeCompare(b.data.city));
 ---
 <Base
-  title="Ling Jordan | 科林县房地产、商业地产与物业管理"
-  description="持照德州地产经纪，隶属 Golden Realty，办公室位于 Frisco。服务 Plano、Frisco、McKinney、Prosper、Allen。住宅买卖、商业地产、物业管理。提供中文服务。"
+  title="Ling Jordan | 达拉斯地区房地产经纪 · 买房卖房 · 商业地产 · 物业管理"
+  description="持照德州房地产经纪，隶属 Golden Realty，办公室位于 Frisco。提供住宅买卖、商业地产交易与物业管理服务。中英文服务。"
   path="/"
 >
   <section class="wrap section">
     <div style="display:flex;align-items:flex-start;gap:2rem;flex-wrap:wrap">
       <div style="flex:1 1 30rem">
-        <p class="eyebrow">德州科林县</p>
-        <h1>房地产的三个方向，一位经纪人。</h1>
+        <p class="eyebrow">德州 · 达拉斯地区</p>
+        <h1>房地产的三件事，一位经纪人全程负责。</h1>
         <p class="lede">
-          我在 Plano、Frisco、McKinney、Prosper 和 Allen
-          提供住宅买卖、商业地产交易以及物业管理服务。三项业务由同一位持照经纪人负责，不会把您转交给别人。
+          我提供住宅买卖、商业地产交易和物业管理服务。三项业务由同一位持照经纪人负责，
+          不会把您转交给别人。合同和披露文件，我会用中文向您解释清楚。
         </p>
         <div class="btn-row" style="margin-top:2rem">
-          <a class="btn btn-primary" href="/homes">搜索房源</a>
-          <a class="btn btn-secondary" href="/owners">我是业主</a>
+          <a class="btn btn-primary" href="/zh/homes">买房或卖房</a>
+          <a class="btn btn-secondary" href="/zh/owners">我是业主</a>
         </div>
       </div>
       <div style="flex:0 0 auto;margin-inline:auto">
@@ -29,9 +34,9 @@ import Seal from '../../components/Seal.astro';
 
   <section class="band">
     <div class="wrap tight stat-row">
-      <div><p class="stat-n">50</p><p class="stat-l">在管物业数量</p></div>
+      <div><p class="stat-n">50</p><p class="stat-l">在管物业</p></div>
       <div><p class="stat-n">TACS</p><p class="stat-l">德州商业地产认证专家</p></div>
-      <div><p class="stat-n">5</p><p class="stat-l">服务城市</p></div>
+      <div><p class="stat-n">5</p><p class="stat-l">科林县重点服务城市</p></div>
       <div><p class="stat-n">2</p><p class="stat-l">中英双语服务</p></div>
     </div>
   </section>
@@ -40,42 +45,83 @@ import Seal from '../../components/Seal.astro';
     <div class="grid grid-3">
       <article class="door">
         <h3>住宅买卖</h3>
-        <p>协助买房与卖房，包括新建房的开发商合同审阅 —— 那份合同是开发商为自己写的。</p>
-        <a href="/homes">搜索房源 &rarr;</a>
+        <p>
+          协助买房与卖房，包括新建房的开发商合同审阅。那份合同是开发商的律师写的，
+          条款是为保护开发商设计的。
+        </p>
+        <a href="/zh/homes">查看房源 &rarr;</a>
       </article>
       <article class="door door--brass">
         <h3>商业地产</h3>
-        <p>零售、办公、轻工业、多户住宅与土地。持有德州商业地产认证专家（TACS）资格。</p>
-        <a href="/commercial">商业服务 &rarr;</a>
+        <p>
+          零售、办公、轻工业、多户住宅与土地。我持有德州商业地产认证专家（TACS）资格，
+          多数住宅经纪并没有这项资格。
+        </p>
+        <a href="/zh/commercial">商业服务 &rarr;</a>
       </article>
       <article class="door door--deep">
         <h3>物业管理</h3>
-        <p>目前管理 50 套物业。收费标准公开列出，无需填表询价。</p>
-        <a href="/owners">业主服务 &rarr;</a>
+        <p>
+          目前管理 50 套物业。收费标准在网站上公开列出，不需要先填表才能知道价格。
+        </p>
+        <a href="/zh/owners">业主服务 &rarr;</a>
       </article>
     </div>
   </section>
 
   <section class="band">
-    <div class="wrap section narrow">
-      <h2 style="margin-top:0">中文服务</h2>
-      <p>
-        合同、披露文件和过户文件，我会用您最熟悉的语言解释清楚 —— 在您签字之前，而不是之后。
+    <div class="wrap section">
+      <p class="eyebrow">服务区域</p>
+      <h2 style="margin-top:0">科林县五个城市，了解到细节。</h2>
+      <p class="prose">
+        我不会说自己熟悉整个达拉斯地区。我熟悉的是科林县，下面这些社区指南写的是实际成交中
+        看到的情况，不是从商会宣传册上抄来的。
       </p>
-      <p class="notice">
-        TODO-COPY —— 中文版其余页面尚未翻译，目前搜索、商业地产与业主页面仍为英文。
-      </p>
+      <div class="grid grid-3" style="margin-top:2rem">
+        {guides.map((g) => (
+          <a class="card" href={`/neighborhoods/${g.data.slug}`}>
+            <h3>{g.data.city}</h3>
+            <p style="margin:0;font-size:var(--step--1);color:var(--ink-soft)">{g.data.schoolDistrict}</p>
+          </a>
+        ))}
+      </div>
+      <p class="notice" style="margin-top:1.5rem">社区指南目前仅有英文版本。</p>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="grid grid-2">
+      <div>
+        <p class="eyebrow">语言服务</p>
+        <h2 style="margin-top:0">中文沟通，中文解释合同。</h2>
+        <p class="prose">
+          买卖合同、产权披露、贷款文件和过户文件，我会在您签字之前用中文解释清楚，
+          而不是签完之后才说明。其他语言我可以免费安排翻译。
+        </p>
+        <p><a href="/zh/about">了解我的工作方式 &rarr;</a></p>
+      </div>
+      <div>
+        <p class="eyebrow">新来德州</p>
+        <h2 style="margin-top:0">刚搬到达拉斯地区？</h2>
+        <p class="prose">
+          因工作搬来的买家会遇到本地买家不会碰到的问题：持签证时贷款机构的要求、
+          是否应该在拿到绿卡之前买房、新建房交房时间与入职时间如何衔接、
+          学区划分和地图上看到的是否一致。
+        </p>
+        <p><a href="/zh/contact">说说您的情况 &rarr;</a></p>
+      </div>
     </div>
   </section>
 
   <section class="band-jade">
     <div class="wrap section">
-      <h2 style="margin-top:0">联系我</h2>
+      <h2 style="margin-top:0">聊一聊您的房产</h2>
       <p style="max-width:var(--measure)">
-        电话或短信 972-815-7644，或发送邮件至 ling@xnjrealestate.com。
+        电话或短信 972-815-7644。我自己接电话，第一次沟通不需要承担任何义务。
       </p>
       <div class="btn-row" style="margin-top:1.75rem">
-        <a class="btn btn-primary" href="/contact">联系方式</a>
+        <a class="btn btn-primary" href="/zh/contact">联系方式</a>
+        <a class="btn btn-ghost" href="tel:+19728157644">致电 972-815-7644</a>
       </div>
     </div>
   </section>

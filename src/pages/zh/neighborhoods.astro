@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const guides = (await getCollection('neighborhoods'))
+  .filter((g) => g.data.locale === 'en')
+  .sort((a, b) => a.data.city.localeCompare(b.data.city));
+const money = (n) => '$' + n.toLocaleString('en-US');
+---
+<Base
+  title="科林县社区指南 | Plano, Frisco, McKinney, Prosper, Allen"
+  description="我主要服务的科林县五个城市：学区、价格区间、通勤和买家常见误解。"
+  path="/neighborhoods"
+>
+  <section class="wrap section narrow">
+    <p class="eyebrow">社区指南</p>
+    <h1>五个城市，如实介绍。</h1>
+    <p class="lede">
+      每份指南写的是这个城市适合什么样的买家、房价大概什么水平、学区怎么划分，
+      以及搬进去之后才会发现的那个取舍。
+    </p>
+    <p class="notice">
+      完整指南目前仅有英文版本。关于任何一个城市的问题，可以直接用中文问我。
+    </p>
+  </section>
+
+  <section class="wrap" style="padding-bottom:clamp(3rem,8vw,5rem)">
+    <div class="grid grid-2">
+      {guides.map((g) => (
+        <a class="card" href={`/neighborhoods/${g.data.slug}`}>
+          <h3>{g.data.city}</h3>
+          <p style="margin:0 0 .5rem;font-size:var(--step--1);color:var(--ink-soft)">
+            {g.data.schoolDistrict}
+            {g.data.medianPrice && <> &middot; 房价中位数约 {money(g.data.medianPrice)}</>}
+          </p>
+          <p style="margin:0;font-size:var(--step--1);color:var(--brass-dark)">阅读指南（英文） &rarr;</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="band-jade">
+    <div class="wrap section">
+      <h2 style="margin-top:0">想了解某个社区？</h2>
+      <p style="max-width:var(--measure)">
+        告诉我您在考虑哪个城市、预算范围和学区要求，我用中文跟您说清楚。
+      </p>
+      <div class="btn-row" style="margin-top:1.75rem">
+        <a class="btn btn-primary" href="/zh/contact">联系我</a>
+      </div>
+    </div>
+  </section>
+</Base>
