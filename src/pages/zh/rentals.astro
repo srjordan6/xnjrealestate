@@ -64,7 +64,7 @@ const STATUS = { 'just-listed': '新上架', 'available-jan': '1月1日可入住
             <p class="rcity">{r.city}, TX</p>
             <h2 class="raddr">{r.address}</h2>
             <p class="rspecs"><span>{r.beds} 卧</span><span>{r.baths} 卫</span></p>
-            <ul class="rchips">{r.features.map((f) => <li>{f}</li>)}</ul>
+            <ul class="rchips">{(r.featuresZh ?? r.features).map((f) => <li>{f}</li>)}</ul>
             <div class="racts">
               <a class="btn btn-primary" href="tel:+19728157644">致电</a>
               <a class="btn btn-secondary" href="sms:+19728157644">短信</a>
